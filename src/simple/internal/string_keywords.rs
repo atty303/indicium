@@ -94,7 +94,9 @@ impl<K: Ord> SearchIndex<K> {
         }; // match
 
         // Split the the string into keywords:
-        let mut keywords: Vec<KString> = if let Some(split_pattern) = &self.split_pattern {
+        let mut keywords: Vec<KString> = if let Some(tokenizer) = &self.tokenizer {
+            (**tokenizer)(string.clone())
+        } else if let Some(split_pattern) = &self.split_pattern {
             // Use the split pattern (a `Vec<char>`) to split the `KString` into
             // keywords and filter the results:
             string
