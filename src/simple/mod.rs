@@ -33,11 +33,11 @@ mod search_index;
 mod search_type;
 mod strsim_metric;
 mod tests;
+mod tokenizer;
 
 // For debug builds only:
 #[cfg(debug_assertions)]
 mod profile;
-mod tokenizer;
 
 // -----------------------------------------------------------------------------
 
@@ -48,3 +48,5 @@ pub use crate::simple::indexable::Indexable;
 pub use crate::simple::search_index::SearchIndex;
 pub use crate::simple::search_type::SearchType;
 pub use crate::simple::strsim_metric::StrsimMetric;
+pub use crate::simple::tokenizer::Tokenizer;
+pub use kstring::*;
