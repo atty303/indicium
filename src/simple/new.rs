@@ -1,5 +1,6 @@
 use crate::simple::{AutocompleteType, EddieMetric, SearchIndex, SearchType, StrsimMetric};
 use std::{cmp::Ord, collections::BTreeMap};
+use crate::simple::tokenizer::Tokenizer;
 
 // -----------------------------------------------------------------------------
 
@@ -45,6 +46,7 @@ impl<K: Ord> SearchIndex<K> {
         fuzzy_length: usize,
         fuzzy_minimum_score: f64,
         split_pattern: Option<Vec<char>>,
+        tokenizer: Option<Tokenizer>,
         case_sensitive: bool,
         minimum_keyword_length: usize,
         maximum_keyword_length: usize,
@@ -65,6 +67,7 @@ impl<K: Ord> SearchIndex<K> {
             fuzzy_length,
             fuzzy_minimum_score,
             split_pattern,
+            tokenizer,
             case_sensitive,
             minimum_keyword_length,
             maximum_keyword_length,

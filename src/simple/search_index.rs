@@ -2,6 +2,7 @@ use crate::simple::{AutocompleteType, EddieMetric, SearchType, StrsimMetric};
 use kstring::KString;
 use std::cmp::Ord;
 use std::collections::{BTreeMap, BTreeSet};
+use crate::simple::tokenizer::Tokenizer;
 
 // -----------------------------------------------------------------------------
 //
@@ -17,7 +18,7 @@ use std::collections::{BTreeMap, BTreeSet};
 /// `struct` type that will update both the collection and search index. This
 /// will ensure that both your collection and index are always synchronized.
 
-#[derive(Clone, Debug, PartialEq, PartialOrd)]
+#[derive(Clone)]
 pub struct SearchIndex<K: Ord> {
     /// Search index data structure.
     pub(crate) b_tree_map: BTreeMap<KString, BTreeSet<K>>,
@@ -44,6 +45,7 @@ pub struct SearchIndex<K: Ord> {
     pub(crate) fuzzy_minimum_score: f64,
     /// Characters used to split strings into keywords.
     pub(crate) split_pattern: Option<Vec<char>>,
+    pub(crate) tokenizer: Option<Tokenizer>,
     /// Indicates whether the search index is case sensitive or not. If set to
     /// false (case insensitive), all keywords will be normalized to lower case.
     pub(crate) case_sensitive: bool,

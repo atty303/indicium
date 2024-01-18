@@ -2,6 +2,7 @@ use crate::simple::{AutocompleteType, EddieMetric, SearchIndex, SearchType, Strs
 use kstring::KString;
 use std::collections::{BTreeMap, BTreeSet};
 use std::{clone::Clone, cmp::Ord};
+use crate::simple::tokenizer::Tokenizer;
 
 // -----------------------------------------------------------------------------
 //
@@ -22,6 +23,7 @@ pub struct SearchIndexBuilder<K> {
     fuzzy_length: usize,
     fuzzy_minimum_score: f64,
     split_pattern: Option<Vec<char>>,
+    tokenizer: Option<Tokenizer>,
     case_sensitive: bool,
     minimum_keyword_length: usize,
     maximum_keyword_length: usize,
@@ -47,6 +49,7 @@ impl<K: Clone + Ord> From<SearchIndex<K>> for SearchIndexBuilder<K> {
             fuzzy_length: search_index.fuzzy_length,
             fuzzy_minimum_score: search_index.fuzzy_minimum_score,
             split_pattern: search_index.split_pattern,
+            tokenizer: search_index.tokenizer,
             case_sensitive: search_index.case_sensitive,
             minimum_keyword_length: search_index.minimum_keyword_length,
             maximum_keyword_length: search_index.maximum_keyword_length,
@@ -74,6 +77,7 @@ impl<K: Clone + Ord> From<SearchIndexBuilder<K>> for SearchIndex<K> {
             fuzzy_length: search_index.fuzzy_length,
             fuzzy_minimum_score: search_index.fuzzy_minimum_score,
             split_pattern: search_index.split_pattern,
+            tokenizer: search_index.tokenizer,
             case_sensitive: search_index.case_sensitive,
             minimum_keyword_length: search_index.minimum_keyword_length,
             maximum_keyword_length: search_index.maximum_keyword_length,
@@ -214,6 +218,11 @@ impl<K: Clone + Ord> SearchIndexBuilder<K> {
         self.split_pattern = split_pattern;
         self
     } // fn
+
+    pub fn tokenizer(mut self, tokenizer: Option<Tokenizer>) -> Self {
+        self.tokenizer = tokenizer;
+        self
+    }
 
     /// Indicates whether the search index is case sensitive or not. If set to
     /// false (case insensitive), all keywords will be normalized to lower case.

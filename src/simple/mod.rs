@@ -37,6 +37,7 @@ mod tests;
 // For debug builds only:
 #[cfg(debug_assertions)]
 mod profile;
+mod tokenizer;
 
 // -----------------------------------------------------------------------------
 
